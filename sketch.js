@@ -51,6 +51,7 @@ function bg() {
         background(bgImage);
     }
 }
+//awd
 
 class Box {
     constructor(x, y, callback) {
