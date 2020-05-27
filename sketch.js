@@ -1,11 +1,16 @@
 var player, playerImg;
 var playerLeft, playerRight;
-var bgImage, planetImg, boxImg;
+var bgImage, planetImg, boxImg, compImg, swordImg;
 var showSprites = true;
 var bgstate = 1;
 var box1, box2, box3, box4, box5;
-var resources = { metal: 0, wood: 0 };
+var resources = { metal: 10000, wood: 10000, gold: 10000 };
 var gamesize = {};
+var emittor, sword;
+var inJungle = false;
+var opened = false;
+var emitImg;
+var o2lvl = 0;
 
 function preload() {
     playerImg = loadImage("images/astronaut/astronaut-still.png");
@@ -21,9 +26,15 @@ function preload() {
         "images/astronaut/walkRight1.png",
         "images/astronaut/walkRight2.png"
     );
+    compImg = loadImage("images/comp.png");
+    emitImg = loadImage("images/emittor.png");
+    swordImg = loadImage("images/sword.png");
 }
 
 function setup() {
+    gamesize.w = windowWidth;
+    gamesize.h = windowHeight - 100;
+
     var cnv = createCanvas(gamesize.w, gamesize.h);
     player = createSprite(100, gamesize.h - 75, 32, 64);
     player.addImage("still", playerImg);
@@ -34,6 +45,16 @@ function setup() {
 }
 
 function draw() {
+    if (player.overlap(box1.sprite) && opened == false) {
+        setInterval(() => {
+            resources.metal += 8;
+            resources.wood += 10;
+        }, 500);
+        box1.sprite.addImage("comp", compImg);
+        box1.sprite.changeImage("comp");
+        opened = true;
+    }
+    showResources(resources);
     bg();
     if (keyIsDown(LEFT_ARROW)) {
         player.changeAnimation("playerLeft");
@@ -44,15 +65,9 @@ function draw() {
     } else {
         player.changeImage("still");
     }
-    if (player.overlap(box1.sprite)) {
-        setInterval(() => {
-            resources.metal += 8;
-            resources.wood += 10;
-        }, 500);
-    }
-    if (showSprites == true) {
-        drawSprites();
-    }
+
+    updateAll();
+    drawSprites();
 }
 
 function bg() {
@@ -63,11 +78,26 @@ function bg() {
     }
 }
 
-class Box {
-    constructor(x, y) {
-        this.sprite = createSprite(x, y);
-        this.sprite.scale = 0.5;
-        this.image = boxImg;
-        this.sprite.addImage(this.image);
+function updateAll() {
+    if (emittor && sword) {
+        sword.updatePos();
+        emittor.sprite.visible = !inJungle;
+        sword.sprite.visible = !inJungle;
+    }
+}
+
+function showResources({ metal, wood, gold }) {
+    document.querySelector(
+        "#resource"
+    ).innerHTML = `Metal: ${metal}, Wood: ${wood}, Gold: ${gold}`;
+}
+
+function switchArea() {
+    if (!isJungle) {
+        bgstate == 2;
+        isJungle = true;
+    } else {
+        bgstate == 1;
+        isJungle = false;
     }
 }

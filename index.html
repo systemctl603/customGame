@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <script src="p5.js"></script>
+        <script src="p5.dom.min.js"></script>
+        <script src="p5.sound.min.js"></script>
+        <script src="./p5.play.js"></script>
+        <script src="components/classes.js"></script>
+        <script src="components/buyObject.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <meta charset="utf-8" />
+    </head>
 
-<head>
-    <script src="p5.js"></script>
-    <script src="p5.dom.min.js"></script>
-    <script src="p5.sound.min.js"></script>
-    <script src="./p5.play.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <meta charset="utf-8">
-
-</head>
-
-<body>
-    <script src="sketch.js"></script>
-</body>
-
+    <body>
+        <div class="gameStat">
+            <p class="gameStat" id="resource">Metal: 0, Wood: 0</p>
+            <p class="gameStat" id="o2lvl">O2 Level: 0</p>
+            <p class="gameStat" id="status"></p>
+        </div>
+        <div class="buttons">
+            <button onclick="buyObject(0)">Buy Emittor</button>
+            <button onclick="buyObject(1)">Buy Sword</button>
+            <button id="area" onclick="switchArea()">Switch Area</button>
+            <button onclick="buyObject(0)">Buy Emittor</button>
+        </div>
+        <script src="sketch.js"></script>
+    </body>
 </html>
