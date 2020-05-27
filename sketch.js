@@ -4,6 +4,7 @@ var bgImage, planetImg, boxImg;
 var showSprites = true;
 var bgstate = 1;
 var box1, box2, box3, box4, box5;
+var resources = {metal: 0, wood: 0};
 
 function preload() {
     playerImg = loadImage('images/astronaut/astronaut-still.png');
@@ -23,7 +24,10 @@ function setup() {
     player.addAnimation('playerRight', playerRight);
     player.scale = 1;
     box1 = new Box(300, windowHeight - 50, () => {
-
+        setInterval(() => {
+            resources.metal += 8;
+            resources.wood += 10;
+        })
     })
 }
 
