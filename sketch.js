@@ -4,48 +4,55 @@ var bgImage, planetImg, boxImg;
 var showSprites = true;
 var bgstate = 1;
 var box1, box2, box3, box4, box5;
-var resources = {metal: 0, wood: 0};
+var resources = { metal: 0, wood: 0 };
+var gamesize = {};
 
 function preload() {
-    playerImg = loadImage('images/astronaut/astronaut-still.png');
-    bgImage = loadImage('images/rocketBackground.png');
-    instructionImage = loadImage('images/first.png');
-    planetImg = loadImage('images/marsBackground.jpeg');
-    boxImg = loadImage('images/box.png');
-    playerLeft = loadAnimation('images/astronaut/walkLeft1.png', 'images/astronaut/walkLeft2.png')
-    playerRight = loadAnimation('images/astronaut/walkRight1.png', 'images/astronaut/walkRight2.png')
+    playerImg = loadImage("images/astronaut/astronaut-still.png");
+    bgImage = loadImage("images/rocketBackground.png");
+    instructionImage = loadImage("images/first.png");
+    planetImg = loadImage("images/marsBackground.jpeg");
+    boxImg = loadImage("images/box.png");
+    playerLeft = loadAnimation(
+        "images/astronaut/walkLeft1.png",
+        "images/astronaut/walkLeft2.png"
+    );
+    playerRight = loadAnimation(
+        "images/astronaut/walkRight1.png",
+        "images/astronaut/walkRight2.png"
+    );
 }
 
 function setup() {
-    var cnv = createCanvas(windowWidth, windowHeight);
-    player = createSprite(100, windowHeight - 75, 32, 64);
-    player.addImage('still', playerImg);
-    player.addAnimation('playerLeft', playerLeft);
-    player.addAnimation('playerRight', playerRight);
+    var cnv = createCanvas(gamesize.w, gamesize.h);
+    player = createSprite(100, gamesize.h - 75, 32, 64);
+    player.addImage("still", playerImg);
+    player.addAnimation("playerLeft", playerLeft);
+    player.addAnimation("playerRight", playerRight);
     player.scale = 1;
-    box1 = new Box(300, windowHeight - 50, () => {
-        setInterval(() => {
-            resources.metal += 8;
-            resources.wood += 10;
-        })
-    })
+    box1 = new Box(300, gamesize.h - 50);
 }
 
 function draw() {
     bg();
     if (keyIsDown(LEFT_ARROW)) {
-        player.changeAnimation('playerLeft');
+        player.changeAnimation("playerLeft");
         player.x -= 10;
     } else if (keyIsDown(RIGHT_ARROW)) {
-        player.changeAnimation('playerRight');
+        player.changeAnimation("playerRight");
         player.x += 10;
     } else {
-        player.changeImage('still');
+        player.changeImage("still");
     }
-    if (player.collide(box1.sprite)) {
-
+    if (player.overlap(box1.sprite)) {
+        setInterval(() => {
+            resources.metal += 8;
+            resources.wood += 10;
+        }, 500);
     }
-    if (showSprites == true) { drawSprites(); }
+    if (showSprites == true) {
+        drawSprites();
+    }
 }
 
 function bg() {
@@ -57,14 +64,10 @@ function bg() {
 }
 
 class Box {
-    constructor(x, y, callback) {
+    constructor(x, y) {
         this.sprite = createSprite(x, y);
         this.sprite.scale = 0.5;
         this.image = boxImg;
         this.sprite.addImage(this.image);
-    }
-
-    execAction(callback) {
-        callback();
     }
 }
