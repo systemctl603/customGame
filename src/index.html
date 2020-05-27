@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="p5.js"></script>
-        <script src="p5.dom.min.js"></script>
-        <script src="p5.sound.min.js"></script>
-        <script src="./p5.play.js"></script>
+        <script src="lib/p5.js"></script>
+        <script src="lib/p5.dom.min.js"></script>
+        <script src="lib/p5.sound.min.js"></script>
+        <script src="lib/p5.play.js"></script>
         <script src="components/classes.js"></script>
         <script src="components/buyObject.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css" />
@@ -18,10 +18,11 @@
             <p class="gameStat" id="status"></p>
         </div>
         <div class="buttons">
-            <button onclick="buyObject(0)">Buy Emittor</button>
-            <button onclick="buyObject(1)">Buy Sword</button>
+            <button id="emit" onclick="buyObject(0)">Buy Emittor</button>
+            <button id="sword" onclick="buyObject(1)">Buy Sword</button>
             <button id="area" onclick="switchArea()">Switch Area</button>
-            <button onclick="buyObject(0)">Buy Emittor</button>
+            <button id="miner" onclick="buyObject(2)">Buy Miner</button>
+            <button id="bases" onclick="buyObject(3)">Buy Base 1</button>
         </div>
         <script src="sketch.js"></script>
     </body>
